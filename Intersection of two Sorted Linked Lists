@@ -1,0 +1,80 @@
+#include <iostream>
+
+using namespace std;
+struct Node
+{
+    int data;
+    struct Node* next;
+};
+
+struct Node *newNode(int data){
+    struct Node* new_node=(struct Node*)malloc(sizeof(struct Node));
+    new_node->data=data;
+    new_node->next=NULL;
+    return new_node;
+}
+void push(struct Node** head_ref,int data){
+     struct Node* new_node=newNode(data);
+     new_node->next=(*head_ref);
+     (*head_ref)=new_node;
+}
+int search(struct Node* list2,int da){
+    while(list2!=NULL){
+        if(list2->data==da){
+            return 1;
+        }
+        list2=list2->next;
+    }
+    return 0;
+}
+struct Node* intersection(struct Node* list1,struct Node* list2){
+    struct Node* res=NULL;
+    while(list1!=NULL){
+        if(search(list2,list1->data)){
+            push(&res,list1->data);
+        }
+        list1=list1->next;
+    }
+    return res;
+}
+/* Driver code*/
+int main()
+{
+    struct Node* list1=NULL;
+    struct Node* list2=NULL;
+    struct Node* list3=NULL;
+    
+    push(&list1,6);
+    push(&list1,4);
+    push(&list1,3);
+    push(&list1,2);
+    
+    push(&list2,8);
+    push(&list2,6);
+    push(&list2,3);
+    push(&list2,1);
+    
+    list3=intersection(list1,list2);
+    cout<<"Linked list1\n";
+    while(list1!=NULL)
+    {
+        cout<<list1->data<<" ";
+        list1=list1->next;
+    }
+    cout<<"\nLinked List 2\n";
+    while(list2!=NULL)
+    {
+        cout<<list2->data<<" ";
+        list2=list2->next;
+    }
+    cout<<"\nIntersection\n";
+    while(list3!=NULL)
+    {
+        cout<<list3->data<<" ";
+        list3=list3->next;
+    }
+    
+    
+    return 0;
+    
+}
