@@ -1,0 +1,57 @@
+#include <iostream>
+
+using namespace std;
+struct Node
+{
+    int data;
+    struct Node* next;
+};
+
+int countNodes(struct Node*n){
+    int count=0;
+    struct Node* temp=n;
+    while(temp->next!=n){
+        count++;
+        temp=temp->next;
+    }
+   return count; 
+}
+struct Node *newNode(int data){
+    struct Node* new_node=(struct Node*)malloc(sizeof(struct Node));
+    new_node->data=data;
+    new_node->next=NULL;
+    return new_node;
+}
+
+int countNodesinLoop(struct Node *head){
+    if(head!=NULL){
+    Node *slow_ptr=head;
+    Node *fast_ptr=head;
+    while(slow_ptr!=NULL && fast_ptr!=NULL && fast_ptr->next!=NULL  ){
+        slow_ptr = slow_ptr->next;
+        fast_ptr = fast_ptr->next->next;
+        if(slow_ptr==fast_ptr){
+            return countNodes(slow_ptr);
+        }
+        
+    }
+    }
+    return 0;
+}
+  
+/* Driver code*/
+int main() 
+{ 
+    struct Node *head = newNode(1); 
+    head->next = newNode(2); 
+    head->next->next = newNode(3); 
+    head->next->next->next = newNode(4); 
+    head->next->next->next->next = newNode(5); 
+  
+    /* Create a loop for testing */
+    head->next->next->next->next->next = head->next; 
+  
+    printf("%d \n", countNodesinLoop(head)); 
+  
+    return 0; 
+} 
