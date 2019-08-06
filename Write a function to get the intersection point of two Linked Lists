@@ -1,0 +1,90 @@
+#include <iostream>
+
+using namespace std;
+
+struct Node
+{
+    int data;
+    struct Node* next;
+};
+void push(struct Node** head_ref, int new_data) 
+{ 
+    /* allocate node */
+    struct Node* new_node = (struct Node*)malloc(sizeof(struct Node));
+            
+   
+    /* put in the data  */
+    new_node->data  = new_data; 
+   
+    /* link the old list off the new node */
+    new_node->next = (*head_ref);     
+   
+    /* move the head to point to the new node */
+    (*head_ref)    = new_node; 
+}
+int getCount(struct Node* head1){
+    int count=0;
+    while(head1!=NULL){
+        count++;
+        head1=head1->next;
+    }
+    return count;
+}
+int getIntersectionNode(int d,struct Node* head1,struct Node* head2){
+    for(int i=0;i<d;i++){
+        if(head1==NULL)
+        {
+            return 0;
+        }
+        head1=head1->next;
+    }
+    while(head1!=NULL&&head2!=NULL){
+        if(head1->data==head2->data)
+        {
+            return head1->data;
+        }
+        head1=head1->next;
+        head2=head2->next;
+    }
+    return 0;
+}
+int getNode(struct Node* head1,struct Node* head2){
+    int c1=getCount(head1);
+    int c2=getCount(head2);
+    int internode;
+    if(c1>c2){
+    int d=c1-c2;
+    internode = getIntersectionNode(d,head1,head2);
+    }
+    else{
+        int d=c2-c1;
+    internode = getIntersectionNode(d,head2,head1);
+    }
+    return internode;
+}
+
+int main()
+{
+    struct Node* list1=NULL;
+    struct Node* list2=NULL;
+      
+        /*Create two linked lists  
+      
+        1st 3->6->9->15->30  
+        2nd 10->15->30  
+      
+        15 is the intersection point */ 
+    
+    push(&list1,30);
+    push(&list1,15);
+    push(&list1,9);
+    push(&list1,5);
+    push(&list1,3);
+    
+    push(&list2,30);
+    push(&list2,15);
+    push(&list2,10);
+    
+    cout << "The node of intersection is " << getNode(list1,list2);
+ return 0;
+}
