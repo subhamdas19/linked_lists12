@@ -1,0 +1,97 @@
+#include <iostream>
+using namespace std; 
+/* a node of the singly linked list */
+struct Node 
+{ 
+    int data; 
+    struct Node *next; 
+}; 
+void push(struct Node** head_ref, int new_data) 
+{ 
+    /* allocate node */
+    struct Node* new_node = 
+        (struct Node*) malloc(sizeof(struct Node)); 
+  
+    /* put in the data */
+    new_node->data = new_data; 
+  
+    /* link the old list off the new node */
+    new_node->next = (*head_ref); 
+  
+    /* move the head to point to the new node */
+    (*head_ref) = new_node; 
+} 
+  
+void segregateEvenOdd(struct Node **head_ref){
+    struct Node* curr=*head_ref;
+    Node *evenstart=NULL;
+    Node *evenend=NULL;
+    Node *oddstart=NULL;
+    Node *oddend=NULL;
+    while(curr!=NULL){
+        int val=curr->data%2;
+        if(val==0){
+            if(evenstart==NULL){
+            evenstart=curr;
+            evenend=evenstart;
+            }
+            else{
+                evenend->next=curr;
+                evenend=evenend->next;
+            }
+        }else{
+            if(oddstart==NULL){
+            oddstart=curr;
+            oddend=oddstart;
+            }
+            else{
+                oddend->next=curr;
+                oddend=evenend->next;
+            }
+        }
+       curr=curr->next; 
+        
+    }
+    if(evenstart==NULL||evenend==NULL)
+    {
+        return;
+    }
+    evenend->next=oddstart;
+    oddend->next=NULL;
+    *head_ref=evenstart;
+}
+void printList(struct Node *node) 
+{ 
+    while (node!=NULL) 
+    { 
+        printf("%d ", node->data); 
+        node = node->next; 
+    } 
+}
+/* Drier program to test above functions*/
+int main() 
+{ 
+    /* Start with the empty list */
+    struct Node* head = NULL; 
+  
+    /* Let us create a sample linked list as following 
+    0->1->4->6->9->10->11 */
+  
+    push(&head, 11); 
+    push(&head, 10); 
+    push(&head, 9); 
+    push(&head, 6); 
+    push(&head, 4); 
+    push(&head, 1); 
+    push(&head, 0); 
+  
+    printf("\nOriginal Linked list \n"); 
+    printList(head); 
+  
+    segregateEvenOdd(&head); 
+  
+    printf("\nModified Linked list \n"); 
+    printList(head); 
+  
+    return 0; 
+} 
