@@ -1,3 +1,6 @@
+https://www.youtube.com/watch?v=j_UNYW6Ap0k(youtube link) iterative approach
+
+
 Method 3 (Using Recursion)
 Merge is one of those nice recursive problems where the recursive solution code is much cleaner than the iterative code. You probably wouldn’t want to use the recursive version for production code however, because it will use stack space which is proportional to the length of the lists.
 filter_none
